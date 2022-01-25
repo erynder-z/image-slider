@@ -1,7 +1,9 @@
 const slideShow = (() => {
+  const slides = document.querySelectorAll('.mySlides');
+  const dots = document.querySelectorAll('.dot');
   const prevBtn = document.getElementById('prev');
   const nextBtn = document.getElementById('next');
-  let slideIndex = 1;
+  let slideIndex = 0;
 
   prevBtn.addEventListener('click', () => {
     plusSlides(-1);
@@ -20,8 +22,6 @@ const slideShow = (() => {
   };
 
   const showSlides = (number) => {
-    const slides = document.querySelectorAll('.mySlides');
-    const dots = document.querySelectorAll('.dot');
     if (number > slides.length) {
       slideIndex = 1;
     }
@@ -37,6 +37,8 @@ const slideShow = (() => {
       dot.className = dot.className.replace(' active', '');
     });
 
+    slideIndex++;
+    slideIndex > slides.length ? (slideIndex = 1) : null;
     slides[slideIndex - 1].style.display = 'block';
     dots[slideIndex - 1].className += ' active';
   };
@@ -45,10 +47,11 @@ const slideShow = (() => {
     const getDots = document.querySelectorAll('.dot');
     getDots.forEach((item) => {
       item.addEventListener('click', () => {
-        currentSlide(item.dataset.index);
+        currentSlide(item.dataset.index - 1);
       });
     });
   })();
 
-  showSlides(slideIndex);
+  showSlides();
+  setTimeout(showSlides, 7000);
 })();
